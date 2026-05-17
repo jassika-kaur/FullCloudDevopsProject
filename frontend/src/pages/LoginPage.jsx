@@ -20,7 +20,7 @@ const LoginPage = ({ setUserInfo, userInfo }) => {
   const submitHandler = async (e) => {
     e.preventDefault();
     try {
-      const { data } = await axios.post('http://localhost:5000/api/users/login', { email, password });
+      const { data } = await axios.post(`${import.meta.env.VITE_API_URL || 'http://localhost:5000'}/api/users/login`, { email, password });
       setUserInfo(data);
       localStorage.setItem('userInfo', JSON.stringify(data));
       navigate(redirect);

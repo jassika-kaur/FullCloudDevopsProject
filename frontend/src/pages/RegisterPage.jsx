@@ -26,7 +26,7 @@ const RegisterPage = ({ setUserInfo, userInfo }) => {
       return;
     }
     try {
-      const { data } = await axios.post('http://localhost:5000/api/users/register', { name, email, password });
+      const { data } = await axios.post(`${import.meta.env.VITE_API_URL || 'http://localhost:5000'}/api/users/register`, { name, email, password });
       setUserInfo(data);
       localStorage.setItem('userInfo', JSON.stringify(data));
       navigate(redirect);

@@ -15,7 +15,7 @@ const HomePage = () => {
     const fetchProducts = async () => {
       setLoading(true);
       try {
-        const { data } = await axios.get(`http://localhost:5000/api/products?keyword=${keyword}`);
+        const { data } = await axios.get(`${import.meta.env.VITE_API_URL || 'http://localhost:5000'}/api/products?keyword=${keyword}`);
         setProducts(data);
         setLoading(false);
       } catch (err) {

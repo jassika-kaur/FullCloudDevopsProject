@@ -7,3 +7,7 @@ build
 terraform/.terraform
 terraform/terraform.tfstate
 terraform/terraform.tfstate.backup
+mern_key
+mern_key.pub
+terraform/mern_key
+terraform/mern_key.pub
