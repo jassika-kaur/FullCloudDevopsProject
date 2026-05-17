@@ -1,0 +1,46 @@
+# ─── Backend Deployment ───────────────────────────────────────────
+# This runs your Express/Node.js backend inside Kubernetes
+
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: backend-deployment
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: backend
+  template:
+    metadata:
+      labels:
+        app: backend
+    spec:
+      containers:
+        - name: backend
+          image: ecommerce-mern-backend:latest   # ← change username
+          imagePullPolicy: Never
+          ports:
+            - containerPort: 5000
+          env:
+            - name: MONGO_URI
+              value: "mongodb://mongo-service:27017/ecommerce"
+            - name: PORT
+              value: "5000"
+            - name: NODE_ENV
+              value: "production"
+
+---
+# ─── Backend Service ──────────────────────────────────────────────
+# This exposes your backend so frontend can reach it
+apiVersion: v1
+kind: Service
+metadata:
+  name: backend-service
+spec:
+  selector:
+    app: backend
+  ports:
+    - port: 5000
+      targetPort: 5000
+      nodePort: 30500      # Access via http://EC2-IP:30500
+  type: NodePort

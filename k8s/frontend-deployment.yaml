@@ -1,0 +1,39 @@
+# ─── Frontend Deployment ──────────────────────────────────────────
+# This runs your React frontend inside Kubernetes
+
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: frontend-deployment
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: frontend
+  template:
+    metadata:
+      labels:
+        app: frontend
+    spec:
+      containers:
+        - name: frontend
+          image: ecommerce-mern-frontend:latest   # ← change username
+          imagePullPolicy: Never
+          ports:
+            - containerPort: 80
+
+---
+# ─── Frontend Service ─────────────────────────────────────────────
+# This exposes your React app to the internet
+apiVersion: v1
+kind: Service
+metadata:
+  name: frontend-service
+spec:
+  selector:
+    app: frontend
+  ports:
+    - port: 3000
+      targetPort: 80
+      nodePort: 30300      # Access via http://EC2-IP:30300
+  type: NodePort
