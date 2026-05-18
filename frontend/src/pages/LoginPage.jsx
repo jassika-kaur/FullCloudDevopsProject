@@ -6,7 +6,7 @@ const LoginPage = ({ setUserInfo, userInfo }) => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [error, setError] = useState('');
-  
+
   const navigate = useNavigate();
   const { search } = useLocation();
   const redirect = new URLSearchParams(search).get('redirect') || '/';
@@ -20,7 +20,7 @@ const LoginPage = ({ setUserInfo, userInfo }) => {
   const submitHandler = async (e) => {
     e.preventDefault();
     try {
-      const { data } = await axios.post(`${import.meta.env.VITE_API_URL || 'http://localhost:5000'}/api/users/login`, { email, password });
+      const { data } = await axios.post(`/api/users/login`, { email, password });
       setUserInfo(data);
       localStorage.setItem('userInfo', JSON.stringify(data));
       navigate(redirect);
@@ -37,10 +37,10 @@ const LoginPage = ({ setUserInfo, userInfo }) => {
         <form onSubmit={submitHandler} style={{ display: 'flex', flexDirection: 'column', gap: '1.5rem' }}>
           <div>
             <label style={{ display: 'block', marginBottom: '0.5rem', fontWeight: '500' }}>Email Address</label>
-            <input 
-              type="email" 
-              placeholder="Enter email" 
-              value={email} 
+            <input
+              type="email"
+              placeholder="Enter email"
+              value={email}
               onChange={(e) => setEmail(e.target.value)}
               style={{ width: '100%', padding: '0.75rem', borderRadius: 'var(--radius-md)', border: '1px solid var(--color-border)', outline: 'none' }}
               required
@@ -48,10 +48,10 @@ const LoginPage = ({ setUserInfo, userInfo }) => {
           </div>
           <div>
             <label style={{ display: 'block', marginBottom: '0.5rem', fontWeight: '500' }}>Password</label>
-            <input 
-              type="password" 
-              placeholder="Enter password" 
-              value={password} 
+            <input
+              type="password"
+              placeholder="Enter password"
+              value={password}
               onChange={(e) => setPassword(e.target.value)}
               style={{ width: '100%', padding: '0.75rem', borderRadius: 'var(--radius-md)', border: '1px solid var(--color-border)', outline: 'none' }}
               required

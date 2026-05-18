@@ -15,7 +15,7 @@ const HomePage = () => {
     const fetchProducts = async () => {
       setLoading(true);
       try {
-        const { data } = await axios.get(`${import.meta.env.VITE_API_URL || 'http://localhost:5000'}/api/products?keyword=${keyword}`);
+        const { data } = await axios.get(`/api/products?keyword=${keyword}`);
         setProducts(data);
         setLoading(false);
       } catch (err) {
@@ -38,9 +38,9 @@ const HomePage = () => {
               Shop Now <ArrowRight size={18} />
             </button>
           </div>
-          <img 
-            src="https://images.unsplash.com/photo-1618366712010-f4ae9c647dcb?w=800&q=80" 
-            alt="Featured Products" 
+          <img
+            src="https://images.unsplash.com/photo-1618366712010-f4ae9c647dcb?w=800&q=80"
+            alt="Featured Products"
             className="hero-image"
           />
         </div>
@@ -52,13 +52,13 @@ const HomePage = () => {
       )}
 
       {!keyword && <h2 className="section-title">Trending Products</h2>}
-      
+
       {loading ? (
         <div className="loader-container">
           <div className="loader"></div>
         </div>
       ) : error ? (
-        <div style={{color: 'var(--color-danger)', textAlign: 'center', padding: '2rem'}}>
+        <div style={{ color: 'var(--color-danger)', textAlign: 'center', padding: '2rem' }}>
           Error loading products. Please make sure the backend server is running.
         </div>
       ) : products.length === 0 ? (

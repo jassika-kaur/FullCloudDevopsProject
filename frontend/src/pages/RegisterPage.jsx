@@ -8,7 +8,7 @@ const RegisterPage = ({ setUserInfo, userInfo }) => {
   const [password, setPassword] = useState('');
   const [confirmPassword, setConfirmPassword] = useState('');
   const [error, setError] = useState('');
-  
+
   const navigate = useNavigate();
   const { search } = useLocation();
   const redirect = new URLSearchParams(search).get('redirect') || '/';
@@ -26,7 +26,7 @@ const RegisterPage = ({ setUserInfo, userInfo }) => {
       return;
     }
     try {
-      const { data } = await axios.post(`${import.meta.env.VITE_API_URL || 'http://localhost:5000'}/api/users/register`, { name, email, password });
+      const { data } = await axios.post(`/api/users/register`, { name, email, password });
       setUserInfo(data);
       localStorage.setItem('userInfo', JSON.stringify(data));
       navigate(redirect);
@@ -43,10 +43,10 @@ const RegisterPage = ({ setUserInfo, userInfo }) => {
         <form onSubmit={submitHandler} style={{ display: 'flex', flexDirection: 'column', gap: '1.25rem' }}>
           <div>
             <label style={{ display: 'block', marginBottom: '0.5rem', fontWeight: '500' }}>Name</label>
-            <input 
-              type="text" 
-              placeholder="Enter name" 
-              value={name} 
+            <input
+              type="text"
+              placeholder="Enter name"
+              value={name}
               onChange={(e) => setName(e.target.value)}
               style={{ width: '100%', padding: '0.75rem', borderRadius: 'var(--radius-md)', border: '1px solid var(--color-border)', outline: 'none' }}
               required
@@ -54,10 +54,10 @@ const RegisterPage = ({ setUserInfo, userInfo }) => {
           </div>
           <div>
             <label style={{ display: 'block', marginBottom: '0.5rem', fontWeight: '500' }}>Email Address</label>
-            <input 
-              type="email" 
-              placeholder="Enter email" 
-              value={email} 
+            <input
+              type="email"
+              placeholder="Enter email"
+              value={email}
               onChange={(e) => setEmail(e.target.value)}
               style={{ width: '100%', padding: '0.75rem', borderRadius: 'var(--radius-md)', border: '1px solid var(--color-border)', outline: 'none' }}
               required
@@ -65,10 +65,10 @@ const RegisterPage = ({ setUserInfo, userInfo }) => {
           </div>
           <div>
             <label style={{ display: 'block', marginBottom: '0.5rem', fontWeight: '500' }}>Password</label>
-            <input 
-              type="password" 
-              placeholder="Enter password" 
-              value={password} 
+            <input
+              type="password"
+              placeholder="Enter password"
+              value={password}
               onChange={(e) => setPassword(e.target.value)}
               style={{ width: '100%', padding: '0.75rem', borderRadius: 'var(--radius-md)', border: '1px solid var(--color-border)', outline: 'none' }}
               required
@@ -76,10 +76,10 @@ const RegisterPage = ({ setUserInfo, userInfo }) => {
           </div>
           <div>
             <label style={{ display: 'block', marginBottom: '0.5rem', fontWeight: '500' }}>Confirm Password</label>
-            <input 
-              type="password" 
-              placeholder="Confirm password" 
-              value={confirmPassword} 
+            <input
+              type="password"
+              placeholder="Confirm password"
+              value={confirmPassword}
               onChange={(e) => setConfirmPassword(e.target.value)}
               style={{ width: '100%', padding: '0.75rem', borderRadius: 'var(--radius-md)', border: '1px solid var(--color-border)', outline: 'none' }}
               required
