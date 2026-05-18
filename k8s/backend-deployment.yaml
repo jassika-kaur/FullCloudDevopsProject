@@ -17,8 +17,8 @@ spec:
     spec:
       containers:
         - name: backend
-          image: ecommerce-mern-backend:latest   # ← change username
-          imagePullPolicy: Never
+          image: jassika/mern-backend:latest  # ← change username
+          imagePullPolicy: Always
           ports:
             - containerPort: 5000
           env:
