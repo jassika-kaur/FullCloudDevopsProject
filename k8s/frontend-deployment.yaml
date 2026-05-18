@@ -17,10 +17,10 @@ spec:
     spec:
       containers:
         - name: frontend
-          image: ecommerce-mern-frontend:latest   # ← change username
-          imagePullPolicy: Never
+          image: jassika/mern-frontend:latest   # ← change username
+          imagePullPolicy: Always
           ports:
-            - containerPort: 80
+            - containerPort: 3000
 
 ---
 # ─── Frontend Service ─────────────────────────────────────────────
@@ -34,6 +34,6 @@ spec:
     app: frontend
   ports:
     - port: 3000
-      targetPort: 80
+      targetPort: 3000
       nodePort: 30300      # Access via http://EC2-IP:30300
   type: NodePort
