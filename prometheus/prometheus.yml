@@ -1,0 +1,24 @@
+# ─── Prometheus Configuration ─────────────────────────────────────
+# Prometheus scrapes (collects) metrics from these targets
+
+global:
+  scrape_interval: 15s       # Collect metrics every 15 seconds
+  evaluation_interval: 15s
+
+scrape_configs:
+
+  # ── Prometheus monitors itself ───────────────────────────────────
+  - job_name: 'prometheus'
+    static_configs:
+      - targets: ['localhost:9090']
+
+  # ── Monitor the Kubernetes nodes ────────────────────────────────
+  - job_name: 'kubernetes-nodes'
+    static_configs:
+      - targets: ['localhost:9100']   # Node exporter
+
+  # ── Monitor your Node.js backend ────────────────────────────────
+  - job_name: 'mern-backend'
+    static_configs:
+      - targets: ['backend-service:5000']
+    metrics_path: '/metrics'          # Your backend exposes metrics here
