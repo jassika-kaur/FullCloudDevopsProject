@@ -7,13 +7,13 @@ variable "aws_region" {
 variable "ami_id" {
   description = "Ubuntu 22.04 LTS AMI — us-east-1"
   type        = string
-  default     = "ami-0c7217cdde317cfec"
+  default     = "ami-00403f401ee6a4b98"
 }
 
 variable "instance_type" {
   description = "EC2 instance type"
   type        = string
-  default     = "t2.medium"   # Good for Jenkins + Docker + Kubernetes
+  default     = "t3.micro"   # Good for Jenkins + Docker + Kubernetes
 }
 
 variable "key_name" {
