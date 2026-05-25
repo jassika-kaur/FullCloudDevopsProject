@@ -20,11 +20,10 @@ const HomePage = () => {
       try {
         const { data } = await axios.get(`/api/products?keyword=${keyword}`);
 
-        // Safe handling for all backend response types
         if (Array.isArray(data)) {
-          setProducts(Array.isArray(data) ? data : data.products || []);
-        } else if (Array.isArray(data.products)) {
           setProducts(data);
+        } else if (Array.isArray(data.products)) {
+          setProducts(data.products);
         } else {
           setProducts([]);
         }
