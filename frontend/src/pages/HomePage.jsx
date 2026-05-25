@@ -22,7 +22,7 @@ const HomePage = () => {
 
         // Safe handling for all backend response types
         if (Array.isArray(data)) {
-          setProducts(data);
+          setProducts(Array.isArray(data) ? data : data.products || []);
         } else if (Array.isArray(data.products)) {
           setProducts(data.products);
         } else {
