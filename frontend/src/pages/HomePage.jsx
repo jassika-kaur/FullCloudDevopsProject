@@ -24,7 +24,7 @@ const HomePage = () => {
         if (Array.isArray(data)) {
           setProducts(Array.isArray(data) ? data : data.products || []);
         } else if (Array.isArray(data.products)) {
-          setProducts(data.products);
+          setProducts(data);
         } else {
           setProducts([]);
         }
