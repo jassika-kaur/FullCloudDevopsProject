@@ -14,18 +14,6 @@ const PORT = process.env.PORT || 5000;
 app.use(cors());
 app.use(express.json());
 
-// Prometheus Metrics Setup
-const client = require('prom-client');
-const collectDefaultMetrics = client.collectDefaultMetrics;
-const Registry = client.Registry;
-const register = new Registry();
-collectDefaultMetrics({ register });
-
-app.get('/metrics', async (req, res) => {
-  res.setHeader('Content-Type', register.contentType);
-  res.send(await register.metrics());
-});
-
 // Basic Route
 app.get('/', (req, res) => {
   res.send('E-commerce API is running...');
@@ -115,10 +103,10 @@ app.get('/api/products', (req, res) => {
   const keyword = req.query.keyword
     ? req.query.keyword.toLowerCase()
     : '';
-  
+
   if (keyword) {
-    const filteredProducts = mockProducts.filter((p) => 
-      p.name.toLowerCase().includes(keyword) || 
+    const filteredProducts = mockProducts.filter((p) =>
+      p.name.toLowerCase().includes(keyword) ||
       p.description.toLowerCase().includes(keyword)
     );
     res.json(filteredProducts);
@@ -192,14 +180,18 @@ app.post('/api/users/login', async (req, res) => {
   }
 });
 
-// Database Connection
-mongoose.connect(process.env.MONGO_URI || 'mongodb://mongodb:27017/ecommerce', {
+// Database Connection (Mocked for now to allow app to run easily, can be uncommented)
+
+mongoose.connect(process.env.MONGO_URI || 'mongodb://localhost:27017/ecommerce', {
+  useNewUrlParser: true,
+  useUnifiedTopology: true,
 }).then(() => {
   console.log('MongoDB Connected');
 }).catch((err) => {
   console.error(`Error: ${err.message}`);
   process.exit(1);
 });
+
 
 app.listen(PORT, () => {
   console.log(`Server running on port ${PORT}`);

@@ -9,17 +9,30 @@ const HomePage = () => {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(false);
   const [searchParams] = useSearchParams();
+
   const keyword = searchParams.get('keyword') || '';
 
   useEffect(() => {
     const fetchProducts = async () => {
       setLoading(true);
+      setError(false);
+
       try {
         const { data } = await axios.get(`/api/products?keyword=${keyword}`);
-        setProducts(data);
-        setLoading(false);
+
+        // Safe handling for all backend response types
+        if (Array.isArray(data)) {
+          setProducts(data);
+        } else if (Array.isArray(data.products)) {
+          setProducts(data.products);
+        } else {
+          setProducts([]);
+        }
       } catch (err) {
+        console.error('Error fetching products:', err);
         setError(true);
+        setProducts([]);
+      } finally {
         setLoading(false);
       }
     };
@@ -33,11 +46,15 @@ const HomePage = () => {
         <div className="hero">
           <div className="hero-content">
             <h1 className="hero-title">Discover Your Next Favorite Thing</h1>
-            <p className="hero-subtitle">Curated premium products designed to elevate your everyday life. Shop our exclusive collection today.</p>
+            <p className="hero-subtitle">
+              Curated premium products designed to elevate your everyday life.
+              Shop our exclusive collection today.
+            </p>
             <button className="btn btn-primary">
               Shop Now <ArrowRight size={18} />
             </button>
           </div>
+
           <img
             src="https://images.unsplash.com/photo-1618366712010-f4ae9c647dcb?w=800&q=80"
             alt="Featured Products"
@@ -47,7 +64,13 @@ const HomePage = () => {
       ) : (
         <div style={{ marginBottom: '2rem' }}>
           <h2>Search Results for: "{keyword}"</h2>
-          <hr style={{ margin: '1rem 0', borderColor: 'var(--color-border)', borderStyle: 'solid' }} />
+          <hr
+            style={{
+              margin: '1rem 0',
+              borderColor: 'var(--color-border)',
+              borderStyle: 'solid',
+            }}
+          />
         </div>
       )}
 
@@ -58,17 +81,29 @@ const HomePage = () => {
           <div className="loader"></div>
         </div>
       ) : error ? (
-        <div style={{ color: 'var(--color-danger)', textAlign: 'center', padding: '2rem' }}>
+        <div
+          style={{
+            color: 'var(--color-danger)',
+            textAlign: 'center',
+            padding: '2rem',
+          }}
+        >
           Error loading products. Please make sure the backend server is running.
         </div>
       ) : products.length === 0 ? (
-        <div style={{ textAlign: 'center', padding: '3rem', color: 'var(--color-text-light)' }}>
+        <div
+          style={{
+            textAlign: 'center',
+            padding: '3rem',
+            color: 'var(--color-text-light)',
+          }}
+        >
           No products found matching your search.
         </div>
       ) : (
         <div className="products-grid">
           {products.map((product) => (
-            <ProductCard key={product._id} product={product} />
+            <ProductCard key={product._id || product.id} product={product} />
           ))}
         </div>
       )}
