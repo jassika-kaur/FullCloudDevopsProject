@@ -182,12 +182,11 @@ app.post('/api/users/login', async (req, res) => {
 
 // Database Connection (Mocked for now to allow app to run easily, can be uncommented)
 
-mongoose.connect(process.env.MONGO_URI || 'mongodb://localhost:27017/ecommerce', {
-  useNewUrlParser: true,
-  useUnifiedTopology: true,
-}).then(() => {
+mongoose.connect(MONGO_URI)
+.then(() => {
   console.log('MongoDB Connected');
-}).catch((err) => {
+})
+.catch((err) => {
   console.error(`Error: ${err.message}`);
   process.exit(1);
 });
